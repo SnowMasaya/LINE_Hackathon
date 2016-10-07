@@ -63,8 +63,8 @@
   sudo: yes
   tags: docker
 
-- name: usermod -aG docker ubuntu
-  shell: usermod -aG docker ubuntu
+- name: usermod -aG docker vagrant
+  shell: usermod -aG docker vagrant
   sudo: yes
   tags: docker
 

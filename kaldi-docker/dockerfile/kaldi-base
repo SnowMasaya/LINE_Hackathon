@@ -1,0 +1,28 @@
+#################################################################################################################
+#          Kaldi ASR for Docker
+#################################################################################################################
+FROM ubuntu:14.04
+MAINTAINER  Masaya Ogushi
+#################################################################################################################
+#          Initial Library Install
+#################################################################################################################
+RUN apt-get upgrade && apt-get update && \
+            apt-get install -y g++ zlib1g-dev make automake libtool git autoconf && \
+            apt-get install -y subversion libatlas3-base bzip2 wget python2.7 && \
+            ln -s /usr/bin/python2.7 /usr/bin/python
+#################################################################################################################
+#          Initial User Setting 
+################################################################################################################# 
+ENV kaldi_user_name kaldi
+ENV kaldi_password kaldi_pass
+ENV kaldi_home /home/kaldi
+RUN useradd -ms /bin/bash ${kaldi_user_name}
+RUN echo ${kaldi_user_name}:${kaldi_password} | chpasswd
+RUN echo “kaldi  ALL=\(ALL\)       ALL” >> /etc/sudoers && \
+    chown -R kaldi /home/kaldi
+#################################################################################################################
+#          Install Kaldi
+#################################################################################################################
+RUN git clone https://github.com/jbender/kaldi.git /home/kaldi/kaldi_library --depth=1
+
+RUN cd /home/kaldi/kaldi_library/tools && make
