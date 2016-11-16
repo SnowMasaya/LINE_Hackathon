@@ -1,7 +1,7 @@
 #################################################################################################################
 #          Kaldi ASR for Docker
 #################################################################################################################
-FROM ubuntu:14.04
+FROM nvidia/cuda:7.5-cudnn4-devel
 MAINTAINER  Masaya Ogushi
 #################################################################################################################
 #          Initial Library Install
@@ -16,10 +16,11 @@ RUN apt-get upgrade && apt-get update && \
 ENV kaldi_user_name kaldi
 ENV kaldi_password kaldi_pass
 ENV kaldi_home /home/kaldi
-RUN useradd -ms /bin/bash ${kaldi_user_name}
+RUN mkdir -p ${kaldi_home}
+RUN useradd -b ${kaldi_home} -s /bin/bash -p ${kaldi_password} -d ${kaldi_home} ${kaldi_user_name}
 RUN echo ${kaldi_user_name}:${kaldi_password} | chpasswd
-RUN echo “kaldi  ALL=\(ALL\)       ALL” >> /etc/sudoers && \
-    chown -R kaldi /home/kaldi
+ADD conf/sudoers /etc/sudoers
+RUN chown -R kaldi /home/kaldi
 #################################################################################################################
 #          Install Kaldi
 #################################################################################################################

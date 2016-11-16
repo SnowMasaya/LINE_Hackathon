@@ -9,7 +9,8 @@ sha1=$(shell echo $(1) | sha1sum | cut -d ' ' -f 1)
 # targets will be created for each. A global pull, import, and export
 # task will be created to operate on the list.
 # NOTE: relevant changes should be synced to fig.yml
-DOCKER_IMAGES:=ubuntu:14.04
+#DOCKER_IMAGES:=ubuntu:14.04
+DOCKER_IMAGES:=nvidia/cuda:7.5-cudnn4-devel
 
 # Template defining tasks to pull, export, and import an image. This
 # These tasks use work arounds to ensure tasks around the dependent
