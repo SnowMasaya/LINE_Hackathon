@@ -8,5 +8,9 @@ MAINTAINER  Masaya Ogushi
 #################################################################################################################
 RUN cd /home/kaldi/kaldi_library/ && git pull
 RUN cd /home/kaldi/kaldi_library/src && ./configure --shared && make depend && make
+ADD srilm-1.7.1 /home/kaldi/kaldi_library/srilm-1.7.1
+RUN cd /home/kaldi/kaldi_library/srilm-1.7.1 && \
+    make && \
+    make all
 WORKDIR /home/kaldi/kaldi_library/
 USER kaldi
