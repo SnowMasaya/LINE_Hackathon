@@ -80,3 +80,5 @@ data_latest
 *.json
 *.gz
 .metadata/
+srilm-1.7.1/*
+srilm-1.7.1
