@@ -12,5 +12,13 @@ ADD srilm-1.7.1 /home/kaldi/kaldi_library/srilm-1.7.1
 RUN cd /home/kaldi/kaldi_library/srilm-1.7.1 && \
     make && \
     make all
+RUN cp -r /home/kaldi/kaldi_library/srilm-1.7.1/bin/* /usr/bin/ && \
+    mkdir /home/kaldi/kaldi_library/egs/voxforge/s5/voxforge && \
+    mkdir /home/kaldi/kaldi_library/egs/voxforge/s5/voxforge/tgz && \
+    mkdir /home/kaldi/kaldi_library/egs/voxforge/s5/voxforge/extracted && \
+    chmod -R 777 /home/kaldi/kaldi_library/egs/voxforge/s5/voxforge && \
+    chmod -R 777 /home/kaldi/kaldi_library/tools/
+ADD shell/path.sh /home/kaldi/kaldi_library/egs/voxforge/s5/path.sh
+RUN bash -lc "sh /home/kaldi/kaldi_library/egs/voxforge/s5/getdata.sh"
 WORKDIR /home/kaldi/kaldi_library/
 USER kaldi
